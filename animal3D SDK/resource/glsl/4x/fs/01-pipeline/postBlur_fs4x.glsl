@@ -24,7 +24,7 @@
 
 #version 450
 
-// ****TO-DO:
+// ****DONE:
 //	-> declare texture coordinate varying and input texture
 //	-> declare sampling axis uniform (see render code for clue)
 //	-> declare Gaussian blur function that samples along one axis
@@ -32,18 +32,28 @@
 
 in vec2 vTexcoord;
 
+uniform vec4 uColor0;
+
 uniform vec2 uAxis; //table of uniforms are in a3demoshaderprogram.h
 
+uniform sampler2D uImage00;
 
 layout (location = 0) out vec4 rtFragColor;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE AQUA
-	rtFragColor = vec4(0.0, 1.0, 0.5, 1.0);
+	//rtFragColor = vec4(0.0, 1.0, 0.5, 1.0);
+
 	//blurring along an axis:
 	// -> sample neighboring pixels, output weighted average
 	//		    -> coordinate offset by some amount (add/sub displacement vector)
 	//                 -> example: horizonal, dv = vec2(1 / resolution(width), 0)
 	//                 -> example: vertical, dv = vec2(0, 1 / height)
+
+	vec4 pixelColor = texture2D(uImage00, vTexcoord);
+	vec4 pixelColor1 = texture2D(uImage00, vTexcoord + uAxis);
+	vec4 pixelColor2 = texture2D(uImage00, vTexcoord - uAxis);
+
+	rtFragColor = (pixelColor + pixelColor1 + pixelColor2) / 3.0f;
 }
