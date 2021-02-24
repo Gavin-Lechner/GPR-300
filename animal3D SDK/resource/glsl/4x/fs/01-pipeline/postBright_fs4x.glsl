@@ -29,11 +29,12 @@
 //	-> implement relative luminance function
 //	-> implement simple "tone mapping" such that the brightest areas of the 
 //		image are emphasized, and the darker areas get darker
-
+//Information in the book about how to make a bright pass
 layout (location = 0) out vec4 rtFragColor;
 
 void main()
 {
+
 	// DUMMY OUTPUT: all fragments are OPAQUE ORANGE
 	rtFragColor = vec4(1.0, 0.5, 0.0, 1.0);
 }
