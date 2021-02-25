@@ -31,10 +31,27 @@
 //		image are emphasized, and the darker areas get darker
 //Information in the book about how to make a bright pass
 layout (location = 0) out vec4 rtFragColor;
+layout (location = 1) out vec4 rtBrightColor;
+
+in vec4 vTexcoord_atlas;
+
+uniform vec4 uColor0;
+
+uniform sampler2D uImage00;
+
 
 void main()
 {
-
 	// DUMMY OUTPUT: all fragments are OPAQUE ORANGE
-	rtFragColor = vec4(1.0, 0.5, 0.0, 1.0);
+	//rtFragColor = vec4(1.0, 0.5, 0.0, 1.0);
+	vec4 pixelColor = texture2D(uImage00, vec2(vTexcoord_atlas.x, vTexcoord_atlas.y));
+	pixelColor *= uColor0;
+	rtFragColor = pixelColor;
+
+	//calculate luminance
+	float Y = dot(vec3(pixelColor.x, pixelColor.y, pixelColor.z), vec3(0.299, 0.587, 0.144));
+
+	//Threshold color and write to second output
+	vec3 color = vec3(pixelColor.x, pixelColor.y, pixelColor.z) * 4.0 *  smoothstep(0.6, 1.2, Y);
+	rtFragColor = vec4(color, 1.0);
 }
