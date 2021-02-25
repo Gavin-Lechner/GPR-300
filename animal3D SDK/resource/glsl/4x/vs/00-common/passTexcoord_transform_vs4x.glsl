@@ -24,7 +24,13 @@
 
 #version 450
 
+uniform mat4 uMVP; //model-view-projeciton matrix
+
 layout (location = 0) in vec4 aPosition;
+
+layout (location = 8) in vec2 aTexcoord;
+
+out vec2 vTexcoord;
 
 flat out int vVertexID;
 flat out int vInstanceID;
@@ -32,8 +38,10 @@ flat out int vInstanceID;
 void main()
 {
 	// DUMMY OUTPUT: directly assign input position to output position
-	gl_Position = aPosition;
+	//gl_Position = aPosition;
+	vTexcoord = aTexcoord;
 
 	vVertexID = gl_VertexID;
 	vInstanceID = gl_InstanceID;
+	gl_Position = uMVP * aPosition;
 }
