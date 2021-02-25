@@ -28,11 +28,27 @@
 //	-> declare texture coordinate varying and set of input textures
 //	-> implement some sort of blending algorithm that highlights bright areas
 //		(hint: research some Photoshop blend modes)
-
 layout (location = 0) out vec4 rtFragColor;
+
+layout (location = 0) uniform sampler2D hdr_image;
+layout (location = 1) uniform sampler2D bloom_image;
+
+in vec4 vTexcoord_atlas;
+
+uniform vec4 uColor0;
+
+uniform sampler2D uImage00;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE PURPLE
 	rtFragColor = vec4(0.5, 0.0, 1.0, 1.0);
+
+	vec4 c = vec4(0.0);
+
+	c+= texelFetch(hdr_image, ivec2(vTexcoord_atlas.xy), 0) * 1.0;
+	c+= texelFetch(bloom_image, ivec2(vTexcoord_atlas.xy), 0) * 1.0;
+
+	c.rgb = vec3(1.0) - exp(-c.rgb * 0.9);
+	rtFragColor = c;
 }

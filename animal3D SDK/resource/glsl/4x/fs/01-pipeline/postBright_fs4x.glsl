@@ -24,7 +24,7 @@
 
 #version 450
 
-// ****TO-DO:
+// ****DONE(ENOUGH):
 //	-> declare texture coordinate varying and input texture
 //	-> implement relative luminance function
 //	-> implement simple "tone mapping" such that the brightest areas of the 
@@ -46,12 +46,13 @@ void main()
 	//rtFragColor = vec4(1.0, 0.5, 0.0, 1.0);
 	vec4 pixelColor = texture2D(uImage00, vec2(vTexcoord_atlas.x, vTexcoord_atlas.y));
 	pixelColor *= uColor0;
-	rtFragColor = pixelColor;
+	//rtFragColor = pixelColor;
 
 	//calculate luminance
-	float Y = dot(vec3(pixelColor.x, pixelColor.y, pixelColor.z), vec3(0.299, 0.587, 0.144));
+	float Y = dot(vec3(pixelColor.x, pixelColor.y, pixelColor.z), vec3(0.2126, 0.7152, 0.0722));
 
 	//Threshold color and write to second output
-	vec3 color = vec3(pixelColor.x, pixelColor.y, pixelColor.z) * 4.0 *  smoothstep(0.6, 1.2, Y);
+	vec3 color = vec3(pixelColor.x, pixelColor.y, pixelColor.z) *  smoothstep(0.4, 1.2, Y);
 	rtFragColor = vec4(color, 1.0);
+	rtBrightColor = vec4(color, 1.0);
 }

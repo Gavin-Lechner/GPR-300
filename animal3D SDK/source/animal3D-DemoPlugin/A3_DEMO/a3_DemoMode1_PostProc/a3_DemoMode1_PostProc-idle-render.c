@@ -512,6 +512,14 @@ void a3postproc_render(a3_DemoState const* demoState, a3_DemoMode1_PostProc cons
 	a3framebufferActivate(currentWriteFBO);
 	a3vertexDrawableRenderActive();
 
+	//Composite
+	currentDemoProgram = demoState->prog_postBlend;
+	a3shaderProgramActivate(currentDemoProgram->program);
+	a3framebufferBindColorTexture(currentWriteFBO, a3tex_unit00, 0);
+	currentWriteFBO = writeFBO[postproc_renderPassDisplay];
+	a3framebufferActivate(currentWriteFBO);
+	a3vertexDrawableRenderActive();
+
 
 	//-------------------------------------------------------------------------
 	// DISPLAY: final pass, perform and present final composite
