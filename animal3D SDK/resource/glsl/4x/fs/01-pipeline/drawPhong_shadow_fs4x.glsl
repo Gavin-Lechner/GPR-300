@@ -37,8 +37,29 @@ layout (location = 0) out vec4 rtFragColor;
 
 uniform int uCount;
 
+in vec4 vPosition;
+in vec4 vNormal;
+
+uniform vec4 uLightPos; //ubo_light is what i think should be here, but its just yelling at me and idk why!!!!!!!!!!!!!
+uniform vec4 uColor0;
+
+uniform float uAttenuation;
+uniform vec4 uLightColor;
+
+uniform sampler2D uImage00;
+
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
 	rtFragColor = vec4(1.0, 0.0, 1.0, 1.0);
+
+	/*
+	vec4 N = normalize(vNormal);
+	vec4 L = normalize(uLightPos-vPosition);
+	float kd = dot(N, L);
+
+	vec4 shadingModel = kd * uAttenuation * uLightColor * uColor0;
+
+	rtFragColor = shadingModel;
+	*/
 }
