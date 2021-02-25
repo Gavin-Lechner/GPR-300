@@ -225,7 +225,7 @@ void a3intro_render(a3_DemoState const* demoState, a3_DemoMode0_Intro const* dem
 
 	// ****DONE: 
 	//	-> send lighting uniforms and bind blocks where appropriate
-
+	// CONFUSED?
 
 	// select pipeline algorithm
 	glDisable(GL_BLEND);

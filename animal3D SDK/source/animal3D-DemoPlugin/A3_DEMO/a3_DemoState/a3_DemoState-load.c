@@ -480,10 +480,10 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			{ { { 0 },	"shdr-fs:draw-Phong",				a3shader_fragment,	2,{ A3_DEMO_FS"00-common/e/drawPhong_fs4x.glsl",
 																					A3_DEMO_FS"00-common/e/utilCommon_fs4x.glsl",} } },
 			// 01-pipeline
-			{ { { 0 },	"shdr-fs:post-bright",				a3shader_fragment,	1,{ A3_DEMO_FS"01-pipeline/postBright_fs4x.glsl" } } }, // ****DECODE
+			{ { { 0 },	"shdr-fs:post-bright",				a3shader_fragment,	1,{ A3_DEMO_FS"01-pipeline/e/postBright_fs4x.glsl" } } }, // ****DECODE
 			{ { { 0 },	"shdr-fs:post-blur",				a3shader_fragment,	1,{ A3_DEMO_FS"01-pipeline/postBlur_fs4x.glsl" } } }, // ****DECODE
-			{ { { 0 },	"shdr-fs:post-blend",				a3shader_fragment,	1,{ A3_DEMO_FS"01-pipeline/postBlend_fs4x.glsl" } } }, // ****DECODE
-			{ { { 0 },	"shdr-fs:draw-Phong-shadow",		a3shader_fragment,	2,{ A3_DEMO_FS"01-pipeline/drawPhong_shadow_fs4x.glsl", // ****DECODE
+			{ { { 0 },	"shdr-fs:post-blend",				a3shader_fragment,	1,{ A3_DEMO_FS"01-pipeline/e/postBlend_fs4x.glsl" } } }, // ****DECODE
+			{ { { 0 },	"shdr-fs:draw-Phong-shadow",		a3shader_fragment,	2,{ A3_DEMO_FS"01-pipeline/e/drawPhong_shadow_fs4x.glsl", // ****DECODE
 																					A3_DEMO_FS"00-common/utilCommon_fs4x.glsl",} } }, // ****DECODE
 		}
 	};
@@ -855,7 +855,7 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 	const a3ui32 targets_composite = 1;
 
 
-	// ****TO-DO:
+	// ****DONE:
 	//	-> uncomment framebuffer initialization
 	//	-> initialize all framebuffers
 	//		(hint: their names describe their features)
@@ -869,10 +869,30 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 	a3framebufferCreate(fbo, "fbo:c16x4;d24s8",
 		4, a3fbo_colorRGBA16, a3fbo_depth24_stencil8,
 		frameWidth1, frameHeight1);
+	fbo = demoState->fbo_c32f;
+	a3framebufferCreate(fbo, "fbo:c32f",
+		8, a3fbo_colorRGB32F, a3fbo_depthDisable,
+		frameWidth1, frameHeight1);
 	fbo = demoState->fbo_d32;
 	a3framebufferCreate(fbo, "fbo:d32", 
 		0, a3fbo_colorDisable, a3fbo_depth32,
 		shadowMapSize, shadowMapSize);
+	fbo = demoState->fbo_c16x4;
+	a3framebufferCreate(fbo, "fbo:c16x4",
+		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+		frameWidth1, frameHeight1);
+	fbo = demoState->fbo_c16_szHalf;
+	a3framebufferCreate(fbo, "fbo:c16;szHalf",
+		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+		frameWidth2, frameHeight2);
+	fbo = demoState->fbo_c16_szQuarter;
+	a3framebufferCreate(fbo, "fbo:c16;szQuarter",
+		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+		frameHeight4, frameHeight4);
+	fbo = demoState->fbo_c16_szEighth;
+	a3framebufferCreate(fbo, "fbo:c16;szEighth",
+		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+		frameHeight8, frameHeight8);
 
 	//...
 
@@ -934,10 +954,10 @@ void a3demo_loadValidate(a3_DemoState* demoState)
 		* const endUBO = currentUBO + demoStateMaxCount_uniformBuffer;
 	a3_Texture* currentTex = demoState->texture,
 		* const endTex = currentTex + demoStateMaxCount_texture;
-	// ****TO-DO:
+	// ****DONE:
 	//	-> uncomment framebuffer pointers
-/*	a3_Framebuffer* currentFBO = demoState->framebuffer,
-		* const endFBO = currentFBO + demoStateMaxCount_framebuffer;*/
+	a3_Framebuffer* currentFBO = demoState->framebuffer,
+		* const endFBO = currentFBO + demoStateMaxCount_framebuffer;
 
 	// set pointers to appropriate release callback for different asset types
 	while (currentBuff < endBuff)
@@ -950,10 +970,10 @@ void a3demo_loadValidate(a3_DemoState* demoState)
 		a3bufferHandleUpdateReleaseCallback(currentUBO++);
 	while (currentTex < endTex)
 		a3textureHandleUpdateReleaseCallback(currentTex++);
-	// ****TO-DO:
+	// ****DONE:
 	//	-> uncomment framebuffer update
-/*	while (currentFBO < endFBO)
-		a3framebufferHandleUpdateReleaseCallback(currentFBO++);*/
+	while (currentFBO < endFBO)
+		a3framebufferHandleUpdateReleaseCallback(currentFBO++);
 
 	// re-link specific object pointers for different asset types
 	currentBuff = demoState->vbo_staticSceneObjectDrawBuffer;

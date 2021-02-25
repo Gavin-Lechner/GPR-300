@@ -47,11 +47,24 @@
 
 layout (location = 0) in vec4 aPosition;
 
+layout (location = 8) in vec2 aTexcoord;
+
 flat out int vVertexID;
 flat out int vInstanceID;
+out vec2 vTexcoord;
 
 uniform int uIndex;
 //Do the same thing for lights! VVVVVV
+struct sPointLightData
+{
+	vec4 position;						// position in rendering target space
+	vec4 worldPos;						// original position in world space
+	vec4 color;							// RGB color with padding
+	float radius;						// radius (distance of effect from center)
+	float radiusSq;						// radius squared (if needed)
+	float radiusInv;					// radius inverse (attenuation factor)
+	float radiusInvSq;					// radius inverse squared (attenuation factor)
+};
 struct sProjectorMatrixStack
 {
 	mat4 projectionMat;						//projection matrix (viewer -> clip)
@@ -84,6 +97,7 @@ uniform ubTransformStack
 {
 	sProjectorMatrixStack uCamera, uLight;
 	//sProjectorMatrixStack uProjector[2];
+	sPointLightData uLightingData;
 	sModelMatrixStack uModels[16];
 };
 
@@ -93,6 +107,7 @@ void main()
 	gl_Position = uCamera.projectionMat *
 	uModels[uIndex].modelViewMat * aPosition; //Camera * Each model * object position = perspective - Gavins interpretation
 
+	vTexcoord = aTexcoord;
 	vVertexID = gl_VertexID;
 	vInstanceID = gl_InstanceID;
 }

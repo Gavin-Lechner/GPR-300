@@ -43,6 +43,7 @@ in vec4 vNormal;
 uniform vec4 uLightPos; //ubo_light is what i think should be here, but its just yelling at me and idk why!!!!!!!!!!!!!
 uniform vec4 uColor0;
 
+
 uniform float uAttenuation;
 uniform vec4 uLightColor;
 
