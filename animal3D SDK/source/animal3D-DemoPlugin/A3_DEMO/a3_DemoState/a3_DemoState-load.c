@@ -881,18 +881,27 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 	a3framebufferCreate(fbo, "fbo:c16x4",
 		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
 		frameWidth1, frameHeight1);
-	fbo = demoState->fbo_c16_szHalf;
-	a3framebufferCreate(fbo, "fbo:c16;szHalf",
-		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
-		frameWidth2, frameHeight2);
-	fbo = demoState->fbo_c16_szQuarter;
-	a3framebufferCreate(fbo, "fbo:c16;szQuarter",
-		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
-		frameHeight4, frameHeight4);
-	fbo = demoState->fbo_c16_szEighth;
-	a3framebufferCreate(fbo, "fbo:c16;szEighth",
-		4, a3fbo_colorRGBA16, a3fbo_depthDisable,
-		frameHeight8, frameHeight8);
+	for (int i = 0; i < 3; i++)
+	{
+		fbo = demoState->fbo_c16_szHalf + i;
+		a3framebufferCreate(fbo, "fbo:c16;szHalf",
+			4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+			frameWidth2, frameHeight2);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		fbo = demoState->fbo_c16_szQuarter + i;
+		a3framebufferCreate(fbo, "fbo:c16;szQuarter",
+			4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+			frameHeight4, frameHeight4);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		fbo = demoState->fbo_c16_szEighth + i;
+		a3framebufferCreate(fbo, "fbo:c16;szEighth",
+			4, a3fbo_colorRGBA16, a3fbo_depthDisable,
+			frameHeight8, frameHeight8);
+	}
 
 	//...
 
