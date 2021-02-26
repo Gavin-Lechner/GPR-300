@@ -22,6 +22,11 @@
 	Bright pass filter.
 */
 
+/*
+	Edited by
+	Evan Koppers
+*/
+
 #version 450
 
 // ****DONE(ENOUGH):

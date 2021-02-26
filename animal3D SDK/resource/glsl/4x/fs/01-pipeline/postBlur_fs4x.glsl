@@ -22,6 +22,11 @@
 	Gaussian blur.
 */
 
+/*
+	Edited by
+	Evan Koppers
+*/
+
 #version 450
 
 // ****DONE:

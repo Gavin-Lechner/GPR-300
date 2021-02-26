@@ -22,6 +22,11 @@
 	Calculate and pass tangent basis, and shadow coordinate.
 */
 
+/*
+	Edited by
+	Gavin Lechner
+*/
+
 #version 450
 
 // ****TO-DO:

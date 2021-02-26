@@ -22,6 +22,11 @@
 	Output Phong shading with shadow mapping.
 */
 
+/*
+	Edited by
+	Gavin Lechner
+*/
+
 #version 450
 
 // ****TO-DO:

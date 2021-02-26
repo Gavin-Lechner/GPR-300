@@ -22,6 +22,13 @@
 	Some useful information about your animal3D distribution.
 -------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------
+	Modified by Evan Koppers and Gavin Lechner
+	for the purposes of an Assignment
+	Added Blur, Blend and Bright Shading, 
+	as well as doing all required prior steps to get those working
+-------------------------------------------------------------------------------
+
 Welcome to "animal3D", the minimal 3D animation framework! This file has some 
 useful information about developing with animal3D.
 
@@ -320,8 +327,8 @@ the pertinent files to a new folder. Zip it up and you're golden!
 	
 -------------------------------------------------------------------------------
 
-That's the gist of it... good luck, have fun, and learn lots!  :)
--Dan
-
+For best results in the current state, 
+in the main loading file, re-encode the Phong shadow fragment shader,
+and the passTangentBasis shadow coord vertex shader
 
 -------------------------------------------------------------------------------

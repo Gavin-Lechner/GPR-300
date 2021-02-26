@@ -22,6 +22,11 @@
 	Blending layers, composition.
 */
 
+/*
+	Edited by
+	Evan Koppers
+*/
+
 #version 450
 
 // ****TO-DO:
