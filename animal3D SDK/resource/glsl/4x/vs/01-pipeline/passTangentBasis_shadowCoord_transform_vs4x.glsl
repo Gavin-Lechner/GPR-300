@@ -55,16 +55,16 @@ out vec2 vTexcoord;
 
 uniform int uIndex;
 //Do the same thing for lights! VVVVVV
-struct sPointLightData
-{
-	vec4 position;						// position in rendering target space
-	vec4 worldPos;						// original position in world space
-	vec4 color;							// RGB color with padding
-	float radius;						// radius (distance of effect from center)
-	float radiusSq;						// radius squared (if needed)
-	float radiusInv;					// radius inverse (attenuation factor)
-	float radiusInvSq;					// radius inverse squared (attenuation factor)
-};
+//struct sPointLightData
+//{
+//	vec4 position;						// position in rendering target space
+//	vec4 worldPos;						// original position in world space
+//	vec4 color;							// RGB color with padding
+//	float radius;						// radius (distance of effect from center)
+//	float radiusSq;						// radius squared (if needed)
+//	float radiusInv;					// radius inverse (attenuation factor)
+//	float radiusInvSq;					// radius inverse squared (attenuation factor)
+//};
 struct sProjectorMatrixStack
 {
 	mat4 projectionMat;						//projection matrix (viewer -> clip)
@@ -96,8 +96,7 @@ struct sModelMatrixStack
 uniform ubTransformStack
 {
 	sProjectorMatrixStack uCamera, uLight;
-	//sProjectorMatrixStack uProjector[2];
-	sPointLightData uLightingData;
+	sProjectorMatrixStack uProjector[2];
 	sModelMatrixStack uModels[16];
 };
 
@@ -106,7 +105,6 @@ void main()
 	// DUMMY OUTPUT: directly assign input position to output position
 	gl_Position = uCamera.projectionMat *
 	uModels[uIndex].modelViewMat * aPosition; //Camera * Each model * object position = perspective - Gavins interpretation
-
 	vTexcoord = aTexcoord;
 	vVertexID = gl_VertexID;
 	vInstanceID = gl_InstanceID;

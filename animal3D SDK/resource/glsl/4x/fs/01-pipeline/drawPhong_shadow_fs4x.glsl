@@ -39,6 +39,7 @@ uniform int uCount;
 
 in vec4 vPosition;
 in vec4 vNormal;
+in vec2 vTexcoord;
 
 uniform vec4 uLightPos; //ubo_light is what i think should be here, but its just yelling at me and idk why!!!!!!!!!!!!!
 uniform vec4 uColor0;
@@ -51,9 +52,18 @@ uniform sampler2D uImage00;
 
 void main()
 {
+    float ambientStrength = 0.1;
+    vec4 ambient = ambientStrength * uLightColor;
+    vec4 result = ambient * uColor0;
+    rtFragColor = vec4(result);
 	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
-	rtFragColor = vec4(1.0, 0.0, 1.0, 1.0);
-
+	//rtFragColor = vec4(1.0, 0.0, 1.0, 1.0);
+//	vec4 norm = normalize(vNormal);
+//	vec4 lightDir = normalize(uLightPos - vec4(vTexcoord,0.0,0.0));  
+//	float diff = max(dot(norm, lightDir), 0.0);
+//	vec4 diffuse = diff * uLightColor;
+//	result = (ambient + diffuse) * uColor0;
+//	rtFragColor = result;
 	/*
 	vec4 N = normalize(vNormal);
 	vec4 L = normalize(uLightPos-vPosition);
