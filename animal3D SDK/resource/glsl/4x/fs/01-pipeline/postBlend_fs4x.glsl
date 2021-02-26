@@ -31,7 +31,9 @@
 layout (location = 0) out vec4 rtFragColor;
 
 layout (location = 0) uniform sampler2D hdr_image;
-layout (location = 1) uniform sampler2D bloom_image;
+layout (location = 1) uniform sampler2D blur2;
+layout (location = 2) uniform sampler2D blur4;
+layout (location = 3) uniform sampler2D blur8;
 
 in vec4 vTexcoord_atlas;
 
@@ -42,15 +44,9 @@ uniform sampler2D uImage00;
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE PURPLE
-	rtFragColor = vec4(0.5, 0.0, 1.0, 1.0);
+	//rtFragColor = vec4(0.5, 0.0, 1.0, 1.0);
+	
+	vec4 c = (texture2D(blur2, vTexcoord_atlas.xy)) + (texture2D(blur4, vTexcoord_atlas.xy)) + (texture2D(blur8, vTexcoord_atlas.xy)) * (texture2D(hdr_image, vTexcoord_atlas.xy) * 2.0);
 
-	/*
-	vec4 c = vec4(0.0);
-
-	c+= texelFetch(hdr_image, ivec2(vTexcoord_atlas.xy), 0) * 1.0;
-	c+= texelFetch(bloom_image, ivec2(vTexcoord_atlas.xy), 0) * 1.0;
-
-	c.rgb = vec3(1.0) - exp(-c.rgb * 0.9);
 	rtFragColor = c;
-	*/
 }

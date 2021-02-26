@@ -47,14 +47,13 @@ void main()
 	
 	vec4 pixelColor = texture2D(uImage00, vec2(vTexcoord_atlas.x, vTexcoord_atlas.y));
 	pixelColor *= uColor0;
-	rtFragColor = pixelColor + vec4(0.2,0.0,0.0,0.0);
+	//rtFragColor = pixelColor;
 
 	//calculate luminance
-	//float Y = dot(vec3(pixelColor.x, pixelColor.y, pixelColor.z), vec3(0.2126, 0.7152, 0.0722));
+	float Y = dot(vec3(pixelColor.x, pixelColor.y, pixelColor.z), vec3(0.2126, 0.7152, 0.0722));
 
 	//Threshold color and write to second output
-	//vec3 color = vec3(pixelColor.x, pixelColor.y, pixelColor.z) * 4.0 *  smoothstep(0.4, 1.2, Y);
-	//rtFragColor = vec4(color, 1.0);
-	//rtBrightColor = vec4(color, 1.0);
-	
+	vec3 color = vec3(pixelColor.x, pixelColor.y, pixelColor.z) * Y;// * 4.0 *  smoothstep(0.4, 1.2, Y);
+	rtFragColor = vec4(color, 1.0);
+	rtBrightColor = vec4(color, 1.0);	
 }

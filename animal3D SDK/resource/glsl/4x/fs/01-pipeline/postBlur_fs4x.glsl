@@ -43,7 +43,7 @@ layout (location = 0) out vec4 rtFragColor;
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE AQUA
-	rtFragColor = vec4(0.0, 1.0, 0.5, 1.0);
+	//rtFragColor = vec4(0.0, 1.0, 0.5, 1.0);
 
 	//blurring along an axis:
 	// -> sample neighboring pixels, output weighted average
@@ -51,11 +51,11 @@ void main()
 	//                 -> example: horizonal, dv = vec2(1 / resolution(width), 0)
 	//                 -> example: vertical, dv = vec2(0, 1 / height)
 
-	/*
+	
 	vec4 pixelColor = texture2D(uImage00, vec2(vTexcoord_atlas.x, vTexcoord_atlas.y));
 	vec4 pixelColor1 = texture2D(uImage00, vec2(vTexcoord_atlas.x, vTexcoord_atlas.y) + uAxis);
 	vec4 pixelColor2 = texture2D(uImage00, vec2(vTexcoord_atlas.x, vTexcoord_atlas.y) - uAxis);
 
-	rtFragColor = (pixelColor);// + pixelColor1 + pixelColor2) / 3.0f;
-	*/
+	rtFragColor = (pixelColor + pixelColor1 + pixelColor2) / 3.0f;
+	
 }
