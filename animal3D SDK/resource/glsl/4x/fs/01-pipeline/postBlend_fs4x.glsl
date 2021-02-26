@@ -44,6 +44,7 @@ void main()
 	// DUMMY OUTPUT: all fragments are OPAQUE PURPLE
 	rtFragColor = vec4(0.5, 0.0, 1.0, 1.0);
 
+	/*
 	vec4 c = vec4(0.0);
 
 	c+= texelFetch(hdr_image, ivec2(vTexcoord_atlas.xy), 0) * 1.0;
@@ -51,4 +52,5 @@ void main()
 
 	c.rgb = vec3(1.0) - exp(-c.rgb * 0.9);
 	rtFragColor = c;
+	*/
 }
