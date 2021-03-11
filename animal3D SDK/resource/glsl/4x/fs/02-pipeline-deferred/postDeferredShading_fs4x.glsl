@@ -39,14 +39,56 @@
 //		back to view-space, perspective divide)
 //	-> calculate and accumulate final diffuse and specular shading
 
+//no more attributes
 in vec4 vTexcoord_atlas;
 
 uniform int uCount;
+
+uniform sampler2D uImage00; // diffuse atlas
+uniform sampler2D uImage01; // specular atlas
+
+uniform sampler2D uImage04; // texcoord g-buffer
+uniform sampler2D uImage05; // normal g-buffer
+//uniform sampler2D uImage06; // position g-buffer
+uniform sampler2D uImage07; // depth g-buffer
+
+uniform mat4 uPB_inv; // bias projection
+
+//testing
+uniform sampler2D uImage02, uImage03; //nrm, ht
 
 layout (location = 0) out vec4 rtFragColor;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE ORANGE
-	rtFragColor = vec4(1.0, 0.5, 0.0, 1.0);
+	//rtFragColor = vec4(1.0, 0.5, 0.0, 1.0);
+	vec4 sceneTexcoord = texture(uImage04, vTexcoord_atlas.xy);
+	vec4 diffuseSample = texture(uImage00, sceneTexcoord.xy);
+	vec4 specularSample = texture(uImage01, sceneTexcoord.xy);
+
+	vec4 position_screen = vTexcoord_atlas;
+	position_screen.z = texture(uImage07, vTexcoord_atlas.xy).r;
+
+	vec4 position_view = uPB_inv * position_screen;
+	position_view /= position_view.w;
+
+	vec4 normal = texture(uImage05, vTexcoord_atlas.xy);
+	normal = (normal - 0.5) * 2.0;
+	//Phong Shading:
+	// ambient
+	// +diffuse color * diffuse light
+	// +specular color * specular light
+	// have:
+	// -> diffuse/specular colors
+	// have not:
+	// -> light stuff
+	//		-> light data -> light data struct -> uniform buffer 
+	//		=> normals, position -> geometry buffers
+	//	-> texture coordiantes -> g-buffer
+
+	// DEBUGGING
+	rtFragColor = position_view;
+	//rtFragColor = normal;
+	rtFragColor.a = diffuseSample.a;
 }

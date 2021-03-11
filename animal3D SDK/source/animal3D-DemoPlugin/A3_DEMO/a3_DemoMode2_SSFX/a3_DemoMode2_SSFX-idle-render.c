@@ -235,7 +235,7 @@ void a3ssfx_render(a3_DemoState const* demoState, a3_DemoMode2_SSFX const* demoM
 
 	// final model matrix and full matrix stack
 	a3mat4 projectionMat = activeCamera->projectorMatrixStackPtr->projectionMat;
-//	a3mat4 projectionBiasMatInv = activeCamera->projectorMatrixStackPtr->projectionBiasMatInverse;
+	a3mat4 projectionBiasMatInv = activeCamera->projectorMatrixStackPtr->projectionBiasMatInverse;
 	a3mat4 viewProjectionMat = activeCamera->projectorMatrixStackPtr->viewProjectionMat;
 	a3mat4 modelMat, modelViewMat, modelViewProjectionMat;
 
@@ -338,6 +338,11 @@ void a3ssfx_render(a3_DemoState const* demoState, a3_DemoMode2_SSFX const* demoM
 		// ****TO-DO:
 		//	-> draw many inverted instances of the unit sphere model (because 
 		//		point lights are spheres), and using additive blending
+		currentDemoProgram = demoState->prog_drawPhongPointLight_instanced;
+		a3shaderProgramActivate(currentDemoProgram->program);
+		//... //invert additive
+		a3vertexDrawableActivateAndRenderInstanced(demoState->draw_unit_sphere, ssfxMaxCount_pointLight);
+		//... //undo
 
 	}
 
@@ -383,12 +388,18 @@ void a3ssfx_render(a3_DemoState const* demoState, a3_DemoMode2_SSFX const* demoM
 		//		(hint: all outputs from previous passes)
 		//	-> activate and send pertinent uniform blocks and values
 		//		(hint: light buffer, light count, inverse bias-projection)
-	/*	// deferred shading
+		// deferred shading
 		//	- similar to light pre-pass but all at once on FSQ
 		currentDemoProgram = demoState->prog_postDeferredShading;
 		a3shaderProgramActivate(currentDemoProgram->program);
 		a3textureActivate(demoState->tex_atlas_dm, a3tex_unit00); // diffuse texture atlas
-		//...*/
+		a3framebufferBindColorTexture(demoState->fbo_c16x4_d24s8, a3tex_unit04, 0); //texcoord
+		a3framebufferBindColorTexture(demoState->fbo_c16x4_d24s8, a3tex_unit05, 1); //normal
+		//a3framebufferBindColorTexture(demoState->fbo_c16x4_d24s8, a3tex_unit06, 3); //position
+		a3framebufferBindColorTexture(demoState->fbo_c16x4_d24s8, a3tex_unit05, 1); //normal
+		a3framebufferBindDepthTexture(demoState->fbo_c16x4_d24s8, a3tex_unit07); //depth
+		a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uPB_inv, 1, projectionBiasMatInv.mm);
+		//...
 		break;
 	case ssfx_renderModePhongDL:
 		// ****TO-DO:
