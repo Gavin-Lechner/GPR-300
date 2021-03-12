@@ -26,7 +26,7 @@
 
 #define MAX_OBJECTS 128
 
-// ****TO-DO:
+// ****DONE?:
 //	-> declare attributes related to lighting
 //		(hint: normal [2], texcoord [8], tangent [10], bitangent [11])
 //	-> declare view-space varyings related to lighting
@@ -38,6 +38,8 @@
 layout (location = 0) in vec4 aPosition;
 layout (location = 2) in vec3 aNormal;
 layout (location = 8) in vec4 aTexcoord;
+layout (location = 10) in vec3 aTangent;
+layout (location = 11) in vec3 aBitangent;
 
 struct sModelMatrixStack
 {
@@ -62,6 +64,13 @@ flat out int vInstanceID;
 out vec4 vPosition;
 out vec4 vNormal;
 out vec4 vTexcoord;
+out vec3 vTangent;
+out vec3 vBitangent;
+out mat3 vViewSpace;
+
+//From the blue book pg 671
+layout (binding = 0) uniform sampler2D tex_diffuse;
+layout (binding = 1) uniform sampler2D tex_normal_map;
 
 out vec4 vPosition_screen;
 
@@ -74,7 +83,14 @@ const mat4 bias = mat4(
 
 void main()
 {
-	// DUMMY OUTPUT: directly assign input position to output position
+//What I think I need for lighting
+	vec3 N = normalize(aNormal);
+	vTangent = normalize(aTangent);
+	vBitangent = cross(N, vTangent);
+	mat3 TBN = mat3(vTangent,vBitangent,N);
+	mat4 TBNP = uModelMatrixStack[uIndex].modelViewProjectionMat * mat4(TBN);
+	vViewSpace = TBN;
+	//VVV in class
 	gl_Position = uModelMatrixStack[uIndex].modelViewProjectionMat * aPosition;
 	vPosition_screen = bias * gl_Position;
 
@@ -84,6 +100,8 @@ void main()
 	vTexcoord = uModelMatrixStack[uIndex].atlasMat * aTexcoord;
 
 	vNormal = uModelMatrixStack[uIndex].modelViewMatInverseTranspose * vec4(aNormal, 0.0);
+
+
 
 	vVertexID = gl_VertexID;
 	vInstanceID = gl_InstanceID;

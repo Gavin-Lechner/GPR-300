@@ -27,16 +27,41 @@
 #define MAX_LIGHTS 1024
 
 // ****TO-DO:
-//	-> declare view-space varyings from vertex shader
-//	-> declare point light data structure and uniform block
-//	-> declare uniform samplers (diffuse, specular & normal maps)
-//	-> calculate final normal by transforming normal map sample
+//	-> declare view-space varyings from vertex shader - Done
+//	-> declare point light data structure and uniform block - Done
+//	-> declare uniform samplers (diffuse, specular & normal maps) - Done
+//	-> calculate final normal by transforming normal map sample - Done
 //	-> calculate common view vector
 //	-> declare lighting sums (diffuse, specular), initialized to zero
 //	-> implement loop in main to calculate and accumulate light
 //	-> calculate and output final Phong sum
 
 uniform int uCount;
+
+//	-> declare view-space varyings from vertex shader - Done
+in vec4 vPosition;
+in vec4 vNormal;
+in vec4 vTexcoord;
+in vec3 vTangent;
+in vec3 vBitangent;
+in mat3 vViewSpace;
+
+//	-> declare point light data structure and uniform block - Done
+struct a3_PointLightData
+{
+	vec4 position;						// position in rendering target space
+	vec4 worldPos;						// original position in world space
+	vec4 color;							// RGB color with padding
+	float radius;						// radius (distance of effect from center)
+	float radiusSq;						// radius squared (if needed)
+	float radiusInv;					// radius inverse (attenuation factor)
+	float radiusInvSq;					// radius inverse squared (attenuation factor)
+};
+
+//	-> declare uniform samplers (diffuse, specular & normal maps) - Done
+uniform sampler2D uImage00; // diffuse atlas
+uniform sampler2D uImage01; // specular atlas
+uniform sampler2D uImage05; // normal g-buffer
 
 layout (location = 0) out vec4 rtFragColor;
 
@@ -62,6 +87,9 @@ void calcPhongPoint(
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
-	rtFragColor = vec4(1.0, 0.0, 1.0, 1.0);
+	//	-> calculate final normal by transforming normal map sample - Done
+	vec3 normal = texture(uImage05, vTexcoord.xy).rgb;
+	normal = normal * 2.0 - 1.0;   
+	normal = normalize(vViewSpace * normal);
+
 }

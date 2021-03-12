@@ -326,10 +326,10 @@ void a3ssfx_render(a3_DemoState const* demoState, a3_DemoMode2_SSFX const* demoM
 		//	-> activate and send pertinent uniform blocks and values
 		//		(hint: light buffer, light transforms, inverse bias-projection)
 		//		(hint: inverse bias-projection variable is commented out above)
-	/*	// draw light volumes
+		// draw light volumes
 		currentDemoProgram = demoState->prog_drawPhongPointLight_instanced;
 		a3shaderProgramActivate(currentDemoProgram->program);
-		//...*/
+		//...
 
 		currentWriteFBO = writeFBO[ssfx_renderPassLights];
 		a3framebufferActivate(currentWriteFBO);
