@@ -22,6 +22,12 @@
 	Calculate full-screen deferred Phong shading.
 */
 
+/*
+	Edited by
+	Gavin Lechner and
+	Evan Koppers
+*/
+
 #version 450
 
 #define MAX_LIGHTS 1024

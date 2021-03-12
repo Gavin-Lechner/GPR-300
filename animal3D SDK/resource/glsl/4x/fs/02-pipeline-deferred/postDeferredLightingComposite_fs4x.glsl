@@ -22,6 +22,12 @@
 	Composite results of light pre-pass in deferred pipeline.
 */
 
+/*
+	Edited by
+	Gavin Lechner and
+	Evan Koppers
+*/
+
 #version 450
 
 // ****TO-DO:

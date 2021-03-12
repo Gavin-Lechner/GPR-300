@@ -22,6 +22,12 @@
 	Output Phong shading components while drawing point light volume.
 */
 
+/*
+	Edited by
+	Gavin Lechner and
+	Evan Koppers
+*/
+
 #version 450
 
 #define MAX_LIGHTS 1024

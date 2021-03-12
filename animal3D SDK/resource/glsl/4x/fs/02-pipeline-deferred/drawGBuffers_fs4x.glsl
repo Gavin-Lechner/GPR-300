@@ -22,6 +22,12 @@
 	Output g-buffers for use in future passes.
 */
 
+/*
+	Edited by
+	Gavin Lechner and
+	Evan Koppers
+*/
+
 #version 450
 
 // ****TO-DO:

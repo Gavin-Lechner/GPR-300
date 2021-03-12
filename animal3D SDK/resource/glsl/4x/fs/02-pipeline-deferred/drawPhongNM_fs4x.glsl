@@ -22,6 +22,12 @@
 	Output Phong shading with normal mapping.
 */
 
+/*
+	Edited by
+	Gavin Lechner and
+	Evan Koppers
+*/
+
 #version 450
 
 #define MAX_LIGHTS 1024

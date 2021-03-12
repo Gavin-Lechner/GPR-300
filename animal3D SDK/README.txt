@@ -22,6 +22,13 @@
 	Some useful information about your animal3D distribution.
 -------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------
+Edited by Gavin Lechner and Evan Koppers
+for the purpose of "Project 3: Screen-Space Rendering Techniques
+in GPR-300-02, Champlain College
+Spring 2021
+-------------------------------------------------------------------------------
+
 Welcome to "animal3D", the minimal 3D animation framework! This file has some 
 useful information about developing with animal3D.
 
