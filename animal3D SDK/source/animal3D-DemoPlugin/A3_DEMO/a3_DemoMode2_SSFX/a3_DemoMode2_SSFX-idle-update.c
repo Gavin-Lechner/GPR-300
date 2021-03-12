@@ -137,7 +137,7 @@ void a3ssfx_update_scene(a3_DemoState* demoState, a3_DemoMode2_SSFX* demoMode, a
 		//			projection matrix to arrive at a proper MVP for each light)
 		// update and transform light matrix
 		//...
-		//10 minutes into second video
+
 	}
 }
 
